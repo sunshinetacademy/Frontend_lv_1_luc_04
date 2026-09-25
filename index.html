@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المحاضرة الرابعة — الجداول والنماذج | Sunshine T Academy</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Fira+Code:wght@400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --primary: #667eea;
+        --primary-dark: #4c5fd5;
+        --secondary: #764ba2;
+        --accent: #f39c12;
+        --success: #27ae60;
+        --danger: #e74c3c;
+        --info: #3498db;
+        --dark: #2c3e50;
+        --light: #f8f9fa;
+        --code-bg: #1e1e2e;
+        --code-header: #181825;
+    }
+
+    body {
+        font-family: 'Cairo', sans-serif;
+        line-height: 1.85;
+        color: var(--dark);
+        background: #eef1f7;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 210mm;
+        margin: 0 auto;
+        background: #fff;
+        padding: 40px;
+        box-shadow: 0 10px 40px rgba(102, 126, 234, 0.15);
+        border-radius: 12px;
+    }
+
+    /* ═══ Header ═══ */
+    .header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        padding: 35px 30px;
+        border-radius: 12px;
+        margin: -40px -40px 35px -40px;
+        text-align: center;
+    }
+    .header h1 { font-size: 2.1em; font-weight: 900; margin-bottom: 8px; }
+    .header .subtitle { font-size: 1.15em; opacity: .95; font-weight: 600; }
+    .lecture-info {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        padding: 14px;
+        background: rgba(255,255,255,.15);
+        border-radius: 10px;
+        font-size: .95em;
+    }
+    .lecture-info div { text-align: center; }
+    .lecture-info strong { display: block; font-size: .85em; opacity: .85; margin-bottom: 3px; }
+
+    /* ═══ Sections ═══ */
+    .section { margin: 32px 0; page-break-inside: avoid; }
+    .section-title {
+        font-size: 1.55em;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 16px;
+        padding-right: 14px;
+        border-right: 5px solid var(--secondary);
+        display: block;
+    }
+
+    /* ═══ Review Box ═══ */
+    .review-box {
+        background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+        padding: 22px;
+        border-radius: 12px;
+        border-right: 5px solid var(--info);
+        margin: 20px 0;
+    }
+    .review-box h3 { color: #006064; margin-bottom: 14px; font-size: 1.25em; }
+    .review-box ul { list-style: none; }
+    .review-box li {
+        padding: 6px 26px 6px 0;
+        position: relative;
+        font-size: .95em;
+    }
+    .review-box li::before {
+        content: "↻";
+        position: absolute;
+        right: 0;
+        color: var(--info);
+        font-weight: 900;
+        font-size: 1.2em;
+    }
+
+    /* ═══ Objectives ═══ */
+    .objectives {
+        background: linear-gradient(135deg, #fff8e1 0%, #ffeaa7 100%);
+        padding: 22px;
+        border-radius: 12px;
+        border-right: 5px solid var(--accent);
+    }
+    .objectives h3 { color: #d35400; margin-bottom: 14px; font-size: 1.25em; }
+    .objectives ul { list-style: none; }
+    .objectives li { padding: 6px 26px 6px 0; position: relative; }
+    .objectives li::before {
+        content: "✓";
+        position: absolute;
+        right: 0;
+        color: var(--success);
+        font-weight: 900;
+        font-size: 1.1em;
+    }
+
+    /* ═══ Content Box ═══ */
+    .content-box {
+        background: var(--light);
+        padding: 22px;
+        border-radius: 10px;
+        margin: 15px 0;
+        border-right: 4px solid var(--primary);
+    }
+    .content-box h4 { color: var(--primary-dark); margin: 15px 0 10px; }
+    .content-box ul { padding-right: 22px; }
+    .content-box li { padding: 4px 0; }
+
+    /* ═══ Key Term ═══ */
+    .key-term {
+        background: #fff3cd;
+        padding: 2px 9px;
+        border-radius: 5px;
+        font-weight: 700;
+        color: #856404;
+        border: 1px solid #ffeaa7;
+    }
+
+    /* ═══ Notes ═══ */
+    .note {
+        background: #fff5f5;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border-right: 5px solid var(--danger);
+        margin: 16px 0;
+    }
+    .note strong { color: #c0392b; }
+
+    .tip {
+        background: #f0fdf4;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border-right: 5px solid var(--success);
+        margin: 16px 0;
+    }
+    .tip strong { color: #166534; }
+
+    .warn {
+        background: #fffbeb;
+        padding: 15px 20px;
+        border-radius: 10px;
+        border-right: 5px solid var(--accent);
+        margin: 16px 0;
+    }
+    .warn strong { color: #b45309; }
+
+    /* ═══════════════════════════════════════════
+       🎨 CODE EDITOR STYLE
+       ═══════════════════════════════════════════ */
+    .code-editor {
+        background: var(--code-bg);
+        border-radius: 12px;
+        margin: 20px 0;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0,0,0,.18);
+        direction: ltr;
+        text-align: left;
+    }
+
+    .editor-bar {
+        background: var(--code-header);
+        padding: 11px 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border-bottom: 1px solid #313244;
+    }
+    .editor-dots { display: flex; gap: 7px; }
+    .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+    }
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #febc2e; }
+    .dot.green { background: #28c840; }
+    .editor-filename {
+        margin-left: auto;
+        margin-right: auto;
+        color: #a6adc8;
+        font-family: 'Fira Code', monospace;
+        font-size: .85em;
+        font-weight: 500;
+        letter-spacing: .3px;
+    }
+
+    .code-editor pre {
+        margin: 0;
+        padding: 20px 22px;
+        overflow-x: auto;
+        font-family: 'Fira Code', 'Courier New', monospace;
+        font-size: 14.5px;
+        line-height: 1.75;
+        color: #cdd6f4;
+        white-space: pre;
+        tab-size: 4;
+        direction: ltr;
+        text-align: left;
+        -moz-tab-size: 4;
+    }
+    .code-editor pre::-webkit-scrollbar { height: 8px; }
+    .code-editor pre::-webkit-scrollbar-thumb { background: #45475a; border-radius: 4px; }
+
+    /* ═══ Syntax Highlighting ═══ */
+    .tag       { color: #f38ba8; }
+    .attr      { color: #fab387; }
+    .value     { color: #a6e3a1; }
+    .text      { color: #cdd6f4; }
+    .comment   { color: #6c7086; font-style: italic; }
+    .doctype   { color: #cba6f7; font-weight: 600; }
+    .bracket   { color: #89b4fa; }
+    .equals    { color: #94e2d5; }
+
+    /* ═══ Output Preview ═══ */
+    .output {
+        background: #fff;
+        border: 2px dashed var(--primary);
+        border-radius: 10px;
+        padding: 18px;
+        margin: 18px 0;
+    }
+    .output::before {
+        content: "🌐 النتيجة في المتصفح";
+        display: block;
+        font-weight: 700;
+        color: var(--primary-dark);
+        margin-bottom: 12px;
+        font-size: .95em;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 8px;
+    }
+
+    /* جدول العرض */
+    .output table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+        font-size: .9em;
+    }
+    .output table th {
+        background: var(--primary);
+        color: white;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #cbd5e1;
+    }
+    .output table td {
+        padding: 8px;
+        border: 1px solid #cbd5e1;
+        text-align: center;
+    }
+    .output table tr:nth-child(even) {
+        background: #f8f9fb;
+    }
+
+    /* نموذج العرض */
+    .output input,
+    .output select,
+    .output textarea {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        font-family: 'Cairo', sans-serif;
+        font-size: .9em;
+        margin: 4px 0;
+    }
+    .output input:focus,
+    .output select:focus,
+    .output textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+    }
+    .output button {
+        background: var(--primary);
+        color: white;
+        padding: 10px 24px;
+        border: none;
+        border-radius: 6px;
+        font-family: 'Cairo', sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 8px;
+    }
+    .output label {
+        display: block;
+        margin: 12px 0 4px;
+        font-weight: 600;
+        color: var(--dark);
+        font-size: .9em;
+    }
+    .output input[type="checkbox"],
+    .output input[type="radio"] {
+        width: auto;
+        margin-left: 6px;
+    }
+
+    /* ═══ Example Box ═══ */
+    .example {
+        background: #f0fdf4;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 16px 0;
+        border-right: 5px solid var(--success);
+    }
+    .example h4 { color: var(--success); margin-bottom: 10px; }
+
+    /* ═══ Tables (Documentation) ═══ */
+    table.doc-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        font-size: .95em;
+    }
+    table.doc-table th {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        color: white;
+        padding: 12px 14px;
+        text-align: right;
+        font-weight: 700;
+    }
+    table.doc-table td {
+        padding: 11px 14px;
+        border-bottom: 1px solid #e9ecf3;
+    }
+    table.doc-table tr:nth-child(even) { background: #f8f9fb; }
+    table.doc-table tr:last-child td { border-bottom: none; }
+    table.doc-table code {
+        background: #eef1f7;
+        padding: 3px 8px;
+        border-radius: 5px;
+        color: var(--primary-dark);
+        font-family: 'Fira Code', monospace;
+        font-size: .9em;
+        direction: ltr;
+        display: inline-block;
+    }
+
+    /* ═══ Milestone Badge ═══ */
+    .milestone {
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border: 2px solid #f59e0b;
+        border-radius: 12px;
+        padding: 20px;
+        margin: 25px 0;
+        text-align: center;
+    }
+    .milestone h3 {
+        color: #b45309;
+        font-size: 1.4em;
+        margin-bottom: 8px;
+    }
+    .milestone p {
+        color: #78350f;
+        font-size: 1.05em;
+    }
+
+    /* ═══ Quiz ═══ */
+    .quiz {
+        background: linear-gradient(135deg, #f3e7ff 0%, #e0d1f5 100%);
+        padding: 28px 24px;
+        border-radius: 14px;
+        margin: 35px 0;
+        page-break-before: always;
+    }
+    .quiz > h3 {
+        color: #6b21a8;
+        margin-bottom: 22px;
+        font-size: 1.4em;
+        text-align: center;
+        padding-bottom: 12px;
+        border-bottom: 2px dashed #a78bfa;
+    }
+    .question {
+        background: white;
+        padding: 16px 18px;
+        border-radius: 10px;
+        margin: 13px 0;
+        border-right: 4px solid #8b5cf6;
+        box-shadow: 0 2px 10px rgba(139, 92, 246, .08);
+    }
+    .question h4 { color: #6b21a8; margin-bottom: 10px; font-size: 1em; }
+    .options { list-style: none; }
+    .options li {
+        padding: 8px 14px;
+        margin: 5px 0;
+        background: #f8f9fb;
+        border-radius: 7px;
+        font-size: .93em;
+        direction: ltr;
+        text-align: left;
+        font-family: 'Fira Code', monospace;
+        color: #374151;
+    }
+    .options li.ar {
+        direction: rtl;
+        text-align: right;
+        font-family: 'Cairo', sans-serif;
+    }
+
+    /* ═══ Homework ═══ */
+    .homework {
+        background: linear-gradient(135deg, #fff1f0 0%, #ffe0db 100%);
+        padding: 28px 24px;
+        border-radius: 14px;
+        margin: 35px 0;
+        page-break-before: always;
+    }
+    .homework > h3 {
+        color: #b91c1c;
+        margin-bottom: 22px;
+        font-size: 1.4em;
+        text-align: center;
+        padding-bottom: 12px;
+        border-bottom: 2px dashed #f87171;
+    }
+    .task {
+        background: white;
+        padding: 18px;
+        border-radius: 10px;
+        margin: 14px 0;
+        border-right: 4px solid var(--danger);
+        box-shadow: 0 2px 10px rgba(231, 76, 60, .08);
+    }
+    .task h4 {
+        color: #b91c1c;
+        margin-bottom: 10px;
+        font-size: 1.05em;
+    }
+    .task ul { padding-right: 22px; margin-top: 6px; }
+    .task ul li { padding: 3px 0; font-size: .95em; }
+    .task ol { padding-right: 22px; margin-top: 6px; }
+    .task ol li { padding: 3px 0; font-size: .95em; }
+
+    /* ═══ Summary ═══ */
+    .summary {
+        background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+        padding: 22px;
+        border-radius: 12px;
+        border-right: 5px solid var(--success);
+        margin: 20px 0;
+    }
+    .summary h3 { color: var(--success); margin-bottom: 14px; }
+    .summary ul { list-style: none; }
+    .summary li {
+        padding: 6px 26px 6px 0;
+        position: relative;
+        font-weight: 500;
+    }
+    .summary li::before {
+        content: "✓";
+        position: absolute;
+        right: 0;
+        color: var(--success);
+        font-weight: 900;
+    }
+
+    /* ═══ Footer ═══ */
+    .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 22px;
+        border-top: 2px solid var(--primary);
+        color: #7f8c8d;
+        font-size: .95em;
+    }
+    .footer strong { color: var(--primary-dark); font-size: 1.05em; }
+    .next-lecture {
+        margin-top: 14px;
+        padding: 12px;
+        background: linear-gradient(135deg, #eef1f7 0%, #e0e7ff 100%);
+        border-radius: 8px;
+        color: var(--primary-dark);
+        font-weight: 600;
+    }
+
+    /* ═══ Print ═══ */
+    @media print {
+        body { background: white; padding: 0; }
+        .container { box-shadow: none; padding: 20px; }
+        .section { page-break-inside: avoid; }
+        .quiz, .homework { page-break-before: always; }
+        .code-editor { box-shadow: none; }
+        .header { margin: -20px -20px 25px -20px; }
+    }
+</style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ═══════ HEADER ═══════ -->
+    <header class="header">
+        <h1>🌟 Sunshine T Academy</h1>
+        <div class="subtitle">Frontend Development Course</div>
+        <div class="lecture-info">
+            <div><strong>المحاضرة</strong><span>الرابعة</span></div>
+            <div><strong>الموضوع</strong><span>الجداول والنماذج</span></div>
+            <div><strong>المستوى</strong><span>مبتدئ</span></div>
+        </div>
+    </header>
+
+    <!-- ═══════ REVIEW ═══════ -->
+    <section class="section">
+        <div class="review-box">
+            <h3>↻ مراجعة سريعة — المحاضرة الثالثة</h3>
+            <ul>
+                <li>إضافة الصور بـ &lt;img src="..." alt="..."&gt;</li>
+                <li>المسارات: نفس المجلد / مجلد فرعي images/ / رابط URL</li>
+                <li>أسماء الملفات بدون مسافات وبحروف إنجليزية صغيرة</li>
+                <li>الصيغ: jpg للصور، png للشفافية، svg للأيقونات</li>
+                <li>&lt;figure&gt; + &lt;figcaption&gt; للصورة مع وصف</li>
+                <li>&lt;audio&gt; و &lt;video&gt; مع controls</li>
+                <li>&lt;iframe&gt; لتضمين فيديوهات يوتيوب</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════ OBJECTIVES ═══════ -->
+    <section class="section">
+        <div class="objectives">
+            <h3>🎯 أهداف المحاضرة</h3>
+            <ul>
+                <li>فهم بنية الجدول (Table) في HTML</li>
+                <li>إنشاء جداول بـ thead و tbody وتنظيمها</li>
+                <li>دمج الخلايا بـ colspan و rowspan</li>
+                <li>فهم النماذج (Forms) وأهميتها في التفاعل</li>
+                <li>معرفة أنواع الـ input المختلفة</li>
+                <li>استخدام labels و placeholders بشكل صحيح</li>
+                <li>بناء نموذج تسجيل كامل في الأكاديمية!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════ PART 1: TABLES ═══════ -->
+    <section class="section">
+        <h2 class="section-title">الجزء الأول: الجداول (Tables)</h2>
+
+        <div class="content-box">
+            <p>الجداول تُستخدم لعرض البيانات المنظمة في صفوف وأعمدة (مثل Excel).</p>
+            <p><strong>أمثلة على استخدام الجداول:</strong></p>
+            <ul>
+                <li>جدول الدرجات في المدرسة</li>
+                <li>قائمة الأسعار في متجر</li>
+                <li>مقارنة المنتجات</li>
+                <li>جدول المواعيد</li>
+            </ul>
+        </div>
+
+        <div class="warn">
+            <strong>⚠️ تنبيه:</strong> الجداول للبيانات فقط! لا تستخدمها لتصميم شكل الصفحة (هذا خطأ قديم — سنتعلم CSS لاحقاً للتصميم).
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 25px 0 15px;">📊 البنية الأساسية للجدول</h3>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">basic-table.html</div>
+            </div>
+<pre><span class="tag">&lt;table&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+        <span class="tag">&lt;th&gt;</span><span class="text">الاسم</span><span class="tag">&lt;/th&gt;</span>
+        <span class="tag">&lt;th&gt;</span><span class="text">العمر</span><span class="tag">&lt;/th&gt;</span>
+        <span class="tag">&lt;th&gt;</span><span class="text">المدينة</span><span class="tag">&lt;/th&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+        <span class="tag">&lt;td&gt;</span><span class="text">أحمد</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;td&gt;</span><span class="text">16</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;td&gt;</span><span class="text">القاهرة</span><span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+        <span class="tag">&lt;td&gt;</span><span class="text">سارة</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;td&gt;</span><span class="text">15</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;td&gt;</span><span class="text">الإسكندرية</span><span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+<span class="tag">&lt;/table&gt;</span></pre>
+        </div>
+
+        <div class="output">
+            <table>
+                <tr>
+                    <th>الاسم</th>
+                    <th>العمر</th>
+                    <th>المدينة</th>
+                </tr>
+                <tr>
+                    <td>أحمد</td>
+                    <td>16</td>
+                    <td>القاهرة</td>
+                </tr>
+                <tr>
+                    <td>سارة</td>
+                    <td>15</td>
+                    <td>الإسكندرية</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="content-box">
+            <h4>📖 شرح العناصر:</h4>
+            <ul>
+                <li><code>&lt;table&gt;</code> = الجدول نفسه</li>
+                <li><code>&lt;tr&gt;</code> = <span class="key-term">Table Row</span> (صف في الجدول)</li>
+                <li><code>&lt;th&gt;</code> = <span class="key-term">Table Header</span> (خلية عنوان — عريضة ومركزية)</li>
+                <li><code>&lt;td&gt;</code> = <span class="key-term">Table Data</span> (خلية بيانات عادية)</li>
+            </ul>
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 30px 0 15px;">🏗️ بنية منظمة بـ thead و tbody</h3>
+
+        <div class="content-box">
+            <p>لتنظيم الجدول بشكل احترافي، نقسمه إلى:</p>
+            <ul>
+                <li><code>&lt;thead&gt;</code> = رأس الجدول (العناوين)</li>
+                <li><code>&lt;tbody&gt;</code> = جسم الجدول (البيانات)</li>
+            </ul>
+        </div>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">structured-table.html</div>
+            </div>
+<pre><span class="tag">&lt;table&gt;</span>
+    <span class="tag">&lt;thead&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;th&gt;</span><span class="text">المادة</span><span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;th&gt;</span><span class="text">الدرجة</span><span class="tag">&lt;/th&gt;</span>
+            <span class="tag">&lt;th&gt;</span><span class="text">التقدير</span><span class="tag">&lt;/th&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;/thead&gt;</span>
+    <span class="tag">&lt;tbody&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;td&gt;</span><span class="text">الرياضيات</span><span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td&gt;</span><span class="text">85</span><span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td&gt;</span><span class="text">ممتاز</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;td&gt;</span><span class="text">العلوم</span><span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td&gt;</span><span class="text">92</span><span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td&gt;</span><span class="text">ممتاز</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+        <span class="tag">&lt;tr&gt;</span>
+            <span class="tag">&lt;td&gt;</span><span class="text">البرمجة</span><span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td&gt;</span><span class="text">98</span><span class="tag">&lt;/td&gt;</span>
+            <span class="tag">&lt;td&gt;</span><span class="text">ممتاز</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;/tbody&gt;</span>
+<span class="tag">&lt;/table&gt;</span></pre>
+        </div>
+
+        <div class="output">
+            <table>
+                <thead>
+                    <tr>
+                        <th>المادة</th>
+                        <th>الدرجة</th>
+                        <th>التقدير</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>الرياضيات</td>
+                        <td>85</td>
+                        <td>ممتاز</td>
+                    </tr>
+                    <tr>
+                        <td>العلوم</td>
+                        <td>92</td>
+                        <td>ممتاز</td>
+                    </tr>
+                    <tr>
+                        <td>البرمجة</td>
+                        <td>98</td>
+                        <td>ممتاز</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 30px 0 15px;">🔀 دمج الخلايا — colspan و rowspan</h3>
+
+        <div class="content-box">
+            <p><strong>colspan</strong> = دمج خلايا أفقياً (عرضياً)</p>
+            <p><strong>rowspan</strong> = دمج خلايا عمودياً (طولياً)</p>
+        </div>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">colspan-example.html</div>
+            </div>
+<pre><span class="tag">&lt;table&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+        <span class="tag">&lt;th</span> <span class="attr">colspan</span><span class="equals">=</span><span class="value">"3"</span><span class="tag">&gt;</span><span class="text">جدول الحضور</span><span class="tag">&lt;/th&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+        <span class="tag">&lt;th&gt;</span><span class="text">الاسم</span><span class="tag">&lt;/th&gt;</span>
+        <span class="tag">&lt;th&gt;</span><span class="text">السبت</span><span class="tag">&lt;/th&gt;</span>
+        <span class="tag">&lt;th&gt;</span><span class="text">الأحد</span><span class="tag">&lt;/th&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+    <span class="tag">&lt;tr&gt;</span>
+        <span class="tag">&lt;td&gt;</span><span class="text">أحمد</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;td&gt;</span><span class="text">✓</span><span class="tag">&lt;/td&gt;</span>
+        <span class="tag">&lt;td&gt;</span><span class="text">✓</span><span class="tag">&lt;/td&gt;</span>
+    <span class="tag">&lt;/tr&gt;</span>
+<span class="tag">&lt;/table&gt;</span></pre>
+        </div>
+
+        <div class="output">
+            <table>
+                <tr>
+                    <th colspan="3">جدول الحضور</th>
+                </tr>
+                <tr>
+                    <th>الاسم</th>
+                    <th>السبت</th>
+                    <th>الأحد</th>
+                </tr>
+                <tr>
+                    <td>أحمد</td>
+                    <td>✓</td>
+                    <td>✓</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tip">
+            <strong>💡 نصيحة:</strong> <code>colspan="3"</code> يعني "هذه الخلية تمتد على 3 أعمدة".
+        </div>
+    </section>
+
+    <!-- ═══════ PART 2: FORMS ═══════ -->
+    <section class="section">
+        <h2 class="section-title">الجزء الثاني: النماذج (Forms)</h2>
+
+        <div class="content-box">
+            <p>النماذج هي <strong>أساس التفاعل</strong> في الويب!</p>
+            <p><strong>أين نستخدمها؟</strong></p>
+            <ul>
+                <li>تسجيل الدخول (Login)</li>
+                <li>التسجيل في موقع (Sign Up)</li>
+                <li>البحث (Search)</li>
+                <li>التعليقات (Comments)</li>
+                <li>نماذج الاستبيان (Survey)</li>
+                <li>الشراء (Checkout)</li>
+            </ul>
+        </div>
+
+        <div class="note">
+            <strong>⚠️ مهم جداً:</strong> في هذا الكورس سنتعلم <strong>شكل النموذج فقط</strong>. إرسال البيانات للسيرفر يحتاج Backend (سنتعلمه لاحقاً).
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 25px 0 15px;">📝 البنية الأساسية للنموذج</h3>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">basic-form.html</div>
+            </div>
+<pre><span class="tag">&lt;form&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"username"</span><span class="tag">&gt;</span><span class="text">اسم المستخدم:</span><span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"text"</span> <span class="attr">id</span><span class="equals">=</span><span class="value">"username"</span> <span class="attr">name</span><span class="equals">=</span><span class="value">"username"</span><span class="tag">&gt;</span>
+    
+    <span class="tag">&lt;button</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"submit"</span><span class="tag">&gt;</span><span class="text">إرسال</span><span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/form&gt;</span></pre>
+        </div>
+
+        <div class="output">
+            <form>
+                <label for="username">اسم المستخدم:</label>
+                <input type="text" id="username" name="username">
+                <button type="submit">إرسال</button>
+            </form>
+        </div>
+
+        <div class="content-box">
+            <h4>📖 شرح العناصر:</h4>
+            <ul>
+                <li><code>&lt;form&gt;</code> = النموذج (حاوية تضم كل حقول الإدخال)</li>
+                <li><code>&lt;label&gt;</code> = التسمية (النص الذي يشرح الحقل)</li>
+                <li><code>for="username"</code> = يربط الـ label بالـ input</li>
+                <li><code>&lt;input&gt;</code> = حقل الإدخال</li>
+                <li><code>type="text"</code> = نوع الحقل (نص عادي)</li>
+                <li><code>id</code> = معرّف فريد للحقل (يربطه بالـ label)</li>
+                <li><code>name</code> = الاسم الذي يُرسَل للسيرفر</li>
+            </ul>
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 30px 0 15px;">🔤 أنواع الـ input — أهم جزء!</h3>
+
+        <table class="doc-table">
+            <thead>
+                <tr><th>النوع</th><th>الاستخدام</th><th>مثال</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>type="text"</code></td>
+                    <td>نص عادي (اسم، عنوان...)</td>
+                    <td>الاسم الكامل</td>
+                </tr>
+                <tr>
+                    <td><code>type="password"</code></td>
+                    <td>كلمة المرور (النص مخفي)</td>
+                    <td>كلمة المرور</td>
+                </tr>
+                <tr>
+                    <td><code>type="email"</code></td>
+                    <td>بريد إلكتروني</td>
+                    <td>البريد الإلكتروني</td>
+                </tr>
+                <tr>
+                    <td><code>type="number"</code></td>
+                    <td>أرقام فقط</td>
+                    <td>العمر</td>
+                </tr>
+                <tr>
+                    <td><code>type="date"</code></td>
+                    <td>تاريخ</td>
+                    <td>تاريخ الميلاد</td>
+                </tr>
+                <tr>
+                    <td><code>type="checkbox"</code></td>
+                    <td>اختيار متعدد (نعم/لا)</td>
+                    <td>أوافق على الشروط</td>
+                </tr>
+                <tr>
+                    <td><code>type="radio"</code></td>
+                    <td>اختيار واحد من عدة</td>
+                    <td>الجنس: ذكر/أنثى</td>
+                </tr>
+                <tr>
+                    <td><code>type="file"</code></td>
+                    <td>رفع ملف</td>
+                    <td>رفع صورة شخصية</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="color: var(--primary-dark); margin: 30px 0 15px;">💡 أمثلة عملية على كل نوع</h3>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">input-types.html</div>
+            </div>
+<pre><span class="tag">&lt;form&gt;</span>
+    <span class="comment">&lt;!-- نص عادي --&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"name"</span><span class="tag">&gt;</span><span class="text">الاسم الكامل:</span><span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"text"</span> <span class="attr">id</span><span class="equals">=</span><span class="value">"name"</span> <span class="attr">placeholder</span><span class="equals">=</span><span class="value">"أحمد محمد"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- كلمة مرور --&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"pass"</span><span class="tag">&gt;</span><span class="text">كلمة المرور:</span><span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"password"</span> <span class="attr">id</span><span class="equals">=</span><span class="value">"pass"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- بريد إلكتروني --&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"email"</span><span class="tag">&gt;</span><span class="text">البريد الإلكتروني:</span><span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"email"</span> <span class="attr">id</span><span class="equals">=</span><span class="value">"email"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- رقم --&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"age"</span><span class="tag">&gt;</span><span class="text">العمر:</span><span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"number"</span> <span class="attr">id</span><span class="equals">=</span><span class="value">"age"</span> <span class="attr">min</span><span class="equals">=</span><span class="value">"10"</span> <span class="attr">max</span><span class="equals">=</span><span class="value">"100"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- تاريخ --&gt;</span>
+    <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"birth"</span><span class="tag">&gt;</span><span class="text">تاريخ الميلاد:</span><span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"date"</span> <span class="attr">id</span><span class="equals">=</span><span class="value">"birth"</span><span class="tag">&gt;</span>
+
+    <span class="comment">&lt;!-- Checkbox --&gt;</span>
+    <span class="tag">&lt;label&gt;</span>
+        <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"checkbox"</span><span class="tag">&gt;</span>
+        <span class="text">أوافق على الشروط والأحكام</span>
+    <span class="tag">&lt;/label&gt;</span>
+
+    <span class="comment">&lt;!-- Radio --&gt;</span>
+    <span class="tag">&lt;label&gt;</span><span class="text">الجنس:</span><span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;label&gt;</span>
+        <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"radio"</span> <span class="attr">name</span><span class="equals">=</span><span class="value">"gender"</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"male"</span><span class="tag">&gt;</span>
+        <span class="text">ذكر</span>
+    <span class="tag">&lt;/label&gt;</span>
+    <span class="tag">&lt;label&gt;</span>
+        <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"radio"</span> <span class="attr">name</span><span class="equals">=</span><span class="value">"gender"</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"female"</span><span class="tag">&gt;</span>
+        <span class="text">أنثى</span>
+    <span class="tag">&lt;/label&gt;</span>
+
+    <span class="tag">&lt;button</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"submit"</span><span class="tag">&gt;</span><span class="text">إرسال</span><span class="tag">&lt;/button&gt;</span>
+<span class="tag">&lt;/form&gt;</span></pre>
+        </div>
+
+        <div class="output">
+            <form>
+                <label for="name">الاسم الكامل:</label>
+                <input type="text" id="name" placeholder="أحمد محمد">
+
+                <label for="pass">كلمة المرور:</label>
+                <input type="password" id="pass">
+
+                <label for="email">البريد الإلكتروني:</label>
+                <input type="email" id="email">
+
+                <label for="age">العمر:</label>
+                <input type="number" id="age" min="10" max="100">
+
+                <label for="birth">تاريخ الميلاد:</label>
+                <input type="date" id="birth">
+
+                <label>
+                    <input type="checkbox">
+                    أوافق على الشروط والأحكام
+                </label>
+
+                <label>الجنس:</label>
+                <label>
+                    <input type="radio" name="gender" value="male">
+                    ذكر
+                </label>
+                <label>
+                    <input type="radio" name="gender" value="female">
+                    أنثى
+                </label>
+
+                <button type="submit">إرسال</button>
+            </form>
+        </div>
+
+        <div class="tip">
+            <strong>💡 ملاحظات مهمة:</strong>
+            <ul style="padding-right: 20px; margin-top: 8px;">
+                <li><code>placeholder</code> = نص توضيحي خفيف داخل الحقل</li>
+                <li><code>required</code> = يجعل الحقل إلزامياً</li>
+                <li>الـ <code>radio</code> يجب أن يكون لها نفس <code>name</code> لاختيار واحد فقط</li>
+                <li><code>min</code> و <code>max</code> للتحكم في الأرقام</li>
+            </ul>
+        </div>
+
+        <h3 style="color: var(--primary-dark); margin: 30px 0 15px;">📋 Textarea و Select</h3>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">textarea-select.html</div>
+            </div>
+<pre><span class="comment">&lt;!-- Textarea - نص طويل متعدد الأسطر --&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"msg"</span><span class="tag">&gt;</span><span class="text">رسالتك:</span><span class="tag">&lt;/label&gt;</span>
+<span class="tag">&lt;textarea</span> <span class="attr">id</span><span class="equals">=</span><span class="value">"msg"</span> <span class="attr">rows</span><span class="equals">=</span><span class="value">"4"</span><span class="tag">&gt;&lt;/textarea&gt;</span>
+
+<span class="comment">&lt;!-- Select - قائمة منسدلة --&gt;</span>
+<span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"city"</span><span class="tag">&gt;</span><span class="text">المدينة:</span><span class="tag">&lt;/label&gt;</span>
+<span class="tag">&lt;select</span> <span class="attr">id</span><span class="equals">=</span><span class="value">"city"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;option</span> <span class="attr">value</span><span class="equals">=</span><span class="value">""</span><span class="tag">&gt;</span><span class="text">اختر المدينة</span><span class="tag">&lt;/option&gt;</span>
+    <span class="tag">&lt;option</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"cairo"</span><span class="tag">&gt;</span><span class="text">القاهرة</span><span class="tag">&lt;/option&gt;</span>
+    <span class="tag">&lt;option</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"alex"</span><span class="tag">&gt;</span><span class="text">الإسكندرية</span><span class="tag">&lt;/option&gt;</span>
+    <span class="tag">&lt;option</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"giza"</span><span class="tag">&gt;</span><span class="text">الجيزة</span><span class="tag">&lt;/option&gt;</span>
+<span class="tag">&lt;/select&gt;</span></pre>
+        </div>
+
+        <div class="output">
+            <label for="msg">رسالتك:</label>
+            <textarea id="msg" rows="4"></textarea>
+
+            <label for="city">المدينة:</label>
+            <select id="city">
+                <option value="">اختر المدينة</option>
+                <option value="cairo">القاهرة</option>
+                <option value="alex">الإسكندرية</option>
+                <option value="giza">الجيزة</option>
+            </select>
+        </div>
+
+        <div class="warn">
+            <strong>🔐 تنبيه أمني (من خبير الأمن السيبراني):</strong>
+            <ul style="padding-right: 20px; margin-top: 8px;">
+                <li>لا تدخل بيانات حقيقية (بريد إلكتروني، كلمة مرور حقيقية) في نماذج تجريبية!</li>
+                <li>استخدم دائماً <code>type="password"</code> لكلمات المرور — <strong>أبداً</strong> لا تستخدم <code>type="text"</code></li>
+                <li>الآن النموذج لن يُرسَل لأي مكان — سنتعلم Backend لاحقاً</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════ FINAL PROJECT ═══════ -->
+    <section class="section">
+        <div class="milestone">
+            <h3>🏆 المشروع النهائي — HTML Fundamentals</h3>
+            <p>نموذج تسجيل في Sunshine T Academy</p>
+        </div>
+
+        <p style="margin: 20px 0;">هذا المشروع يجمع <strong>كل ما تعلمناه في 4 محاضرات!</strong> 🎉</p>
+
+        <div class="code-editor">
+            <div class="editor-bar">
+                <div class="editor-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="editor-filename">registration-form.html</div>
+            </div>
+<pre><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span><span class="equals">=</span><span class="value">"ar"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span><span class="equals">=</span><span class="value">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;title&gt;</span><span class="text">التسجيل في Sunshine T Academy</span><span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="comment">&lt;!-- الرأس --&gt;</span>
+    <span class="tag">&lt;h1&gt;</span><span class="text">🌟 Sunshine T Academy</span><span class="tag">&lt;/h1&gt;</span>
+    <span class="tag">&lt;h2&gt;</span><span class="text">نموذج التسجيل في كورس Frontend</span><span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;p&gt;</span><span class="text">املأ البيانات التالية للانضمام إلى رحلة البرمجة!</span><span class="tag">&lt;/p&gt;</span>
+
+    <span class="tag">&lt;hr&gt;</span>
+
+    <span class="comment">&lt;!-- النموذج الرئيسي --&gt;</span>
+    <span class="tag">&lt;form&gt;</span>
+        <span class="comment">&lt;!-- القسم 1: المعلومات الشخصية --&gt;</span>
+        <span class="tag">&lt;h3&gt;</span><span class="text">📋 المعلومات الشخصية</span><span class="tag">&lt;/h3&gt;</span>
+
+        <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"fullname"</span><span class="tag">&gt;</span><span class="text">الاسم الكامل:</span><span class="tag">&lt;/label&gt;</span>
+        <span class="tag">&lt;input</span>
+            <span class="attr">type</span><span class="equals">=</span><span class="value">"text"</span>
+            <span class="attr">id</span><span class="equals">=</span><span class="value">"fullname"</span>
+            <span class="attr">placeholder</span><span class="equals">=</span><span class="value">"أحمد محمد علي"</span>
+            <span class="attr">required</span><span class="tag">&gt;</span>
+
+        <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"email"</span><span class="tag">&gt;</span><span class="text">البريد الإلكتروني:</span><span class="tag">&lt;/label&gt;</span>
+        <span class="tag">&lt;input</span>
+            <span class="attr">type</span><span class="equals">=</span><span class="value">"email"</span>
+            <span class="attr">id</span><span class="equals">=</span><span class="value">"email"</span>
+            <span class="attr">placeholder</span><span class="equals">=</span><span class="value">"ahmed@example.com"</span>
+            <span class="attr">required</span><span class="tag">&gt;</span>
+
+        <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"age"</span><span class="tag">&gt;</span><span class="text">العمر:</span><span class="tag">&lt;/label&gt;</span>
+        <span class="tag">&lt;input</span>
+            <span class="attr">type</span><span class="equals">=</span><span class="value">"number"</span>
+            <span class="attr">id</span><span class="equals">=</span><span class="value">"age"</span>
+            <span class="attr">min</span><span class="equals">=</span><span class="value">"10"</span>
+            <span class="attr">max</span><span class="equals">=</span><span class="value">"100"</span>
+            <span class="attr">required</span><span class="tag">&gt;</span>
+
+        <span class="tag">&lt;label&gt;</span><span class="text">الجنس:</span><span class="tag">&lt;/label&gt;</span>
+        <span class="tag">&lt;label&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"radio"</span> <span class="attr">name</span><span class="equals">=</span><span class="value">"gender"</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"male"</span><span class="tag">&gt;</span>
+            <span class="text">ذكر</span>
+        <span class="tag">&lt;/label&gt;</span>
+        <span class="tag">&lt;label&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"radio"</span> <span class="attr">name</span><span class="equals">=</span><span class="value">"gender"</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"female"</span><span class="tag">&gt;</span>
+            <span class="text">أنثى</span>
+        <span class="tag">&lt;/label&gt;</span>
+
+        <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"city"</span><span class="tag">&gt;</span><span class="text">المدينة:</span><span class="tag">&lt;/label&gt;</span>
+        <span class="tag">&lt;select</span> <span class="attr">id</span><span class="equals">=</span><span class="value">"city"</span> <span class="attr">required</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;option</span> <span class="attr">value</span><span class="equals">=</span><span class="value">""</span><span class="tag">&gt;</span><span class="text">اختر المدينة</span><span class="tag">&lt;/option&gt;</span>
+            <span class="tag">&lt;option</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"cairo"</span><span class="tag">&gt;</span><span class="text">القاهرة</span><span class="tag">&lt;/option&gt;</span>
+            <span class="tag">&lt;option</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"alex"</span><span class="tag">&gt;</span><span class="text">الإسكندرية</span><span class="tag">&lt;/option&gt;</span>
+            <span class="tag">&lt;option</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"giza"</span><span class="tag">&gt;</span><span class="text">الجيزة</span><span class="tag">&lt;/option&gt;</span>
+        <span class="tag">&lt;/select&gt;</span>
+
+        <span class="tag">&lt;hr&gt;</span>
+
+        <span class="comment">&lt;!-- القسم 2: الكورسات --&gt;</span>
+        <span class="tag">&lt;h3&gt;</span><span class="text">💻 الكورسات المهتم بها</span><span class="tag">&lt;/h3&gt;</span>
+
+        <span class="tag">&lt;label&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"checkbox"</span> <span class="attr">name</span><span class="equals">=</span><span class="value">"courses"</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"frontend"</span><span class="tag">&gt;</span>
+            <span class="text">Frontend Development</span>
+        <span class="tag">&lt;/label&gt;</span>
+        <span class="tag">&lt;label&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"checkbox"</span> <span class="attr">name</span><span class="equals">=</span><span class="value">"courses"</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"backend"</span><span class="tag">&gt;</span>
+            <span class="text">Backend Development</span>
+        <span class="tag">&lt;/label&gt;</span>
+        <span class="tag">&lt;label&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"checkbox"</span> <span class="attr">name</span><span class="equals">=</span><span class="value">"courses"</span> <span class="attr">value</span><span class="equals">=</span><span class="value">"design"</span><span class="tag">&gt;</span>
+            <span class="text">UI/UX Design</span>
+        <span class="tag">&lt;/label&gt;</span>
+
+        <span class="tag">&lt;hr&gt;</span>
+
+        <span class="comment">&lt;!-- القسم 3: رسالة --&gt;</span>
+        <span class="tag">&lt;h3&gt;</span><span class="text">💬 رسالتك لنا</span><span class="tag">&lt;/h3&gt;</span>
+
+        <span class="tag">&lt;label</span> <span class="attr">for</span><span class="equals">=</span><span class="value">"message"</span><span class="tag">&gt;</span><span class="text">لماذا تريد تعلم البرمجة؟</span><span class="tag">&lt;/label&gt;</span>
+        <span class="tag">&lt;textarea</span>
+            <span class="attr">id</span><span class="equals">=</span><span class="value">"message"</span>
+            <span class="attr">rows</span><span class="equals">=</span><span class="value">"5"</span>
+            <span class="attr">placeholder</span><span class="equals">=</span><span class="value">"أخبرنا عن دوافعك وأهدافك..."</span><span class="tag">&gt;&lt;/textarea&gt;</span>
+
+        <span class="tag">&lt;hr&gt;</span>
+
+        <span class="comment">&lt;!-- الموافقة والإرسال --&gt;</span>
+        <span class="tag">&lt;label&gt;</span>
+            <span class="tag">&lt;input</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"checkbox"</span> <span class="attr">required</span><span class="tag">&gt;</span>
+            <span class="text">أوافق على شروط الأكاديمية</span>
+        <span class="tag">&lt;/label&gt;</span>
+
+        <span class="tag">&lt;button</span> <span class="attr">type</span><span class="equals">=</span><span class="value">"submit"</span><span class="tag">&gt;</span><span class="text">📩 إرسال التسجيل</span><span class="tag">&lt;/button&gt;</span>
+    <span class="tag">&lt;/form&gt;</span>
+
+    <span class="tag">&lt;hr&gt;</span>
+
+    <span class="comment">&lt;!-- تذييل --&gt;</span>
+    <span class="tag">&lt;p&gt;</span>
+        <span class="tag">&lt;small&gt;</span><span class="text">هل لديك حساب؟ </span>
+        <span class="tag">&lt;a</span> <span class="attr">href</span><span class="equals">=</span><span class="value">"login.html"</span><span class="tag">&gt;</span><span class="text">تسجيل الدخول</span><span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/small&gt;</span>
+    <span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></pre>
+        </div>
+
+        <div class="tip">
+            <strong>🎉 تهانينا!</strong> أنت الآن تعرف كيف تبني:
+            <ul style="padding-right: 20px; margin-top: 8px;">
+                <li>✅ صفحات HTML كاملة بالبنية الصحيحة</li>
+                <li>✅ عناوين وفقرات ونصوص منسقة</li>
+                <li>✅ قوائم مرتبة وغير مرتبة</li>
+                <li>✅ روابط داخلية وخارجية</li>
+                <li>✅ صور بمسارات صحيحة</li>
+                <li>✅ جداول منظمة</li>
+                <li>✅ نماذج تفاعلية كاملة!</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- ═══════ SUMMARY ═══════ -->
+    <section class="section">
+        <h2 class="section-title">ملخص المحاضرة</h2>
+        <div class="summary">
+            <h3>✅ ما تعلمناه اليوم</h3>
+            <ul>
+                <li>الجداول: &lt;table&gt; &lt;tr&gt; &lt;th&gt; &lt;td&gt;</li>
+                <li>تنظيم الجداول بـ &lt;thead&gt; و &lt;tbody&gt;</li>
+                <li>دمج الخلايا بـ colspan و rowspan</li>
+                <li>النماذج: &lt;form&gt; أساس التفاعل في الويب</li>
+                <li>&lt;label&gt; و &lt;input&gt; مع for و id</li>
+                <li>أنواع input: text, password, email, number, date, checkbox, radio</li>
+                <li>&lt;textarea&gt; للنص الطويل و &lt;select&gt; للقوائم المنسدلة</li>
+                <li>placeholder للنص التوضيحي، required للحقول الإلزامية</li>
+                <li>بنينا نموذج تسجيل كامل في الأكاديمية! 🏆</li>
+            </ul>
+        </div>
+
+        <div class="milestone" style="margin-top: 30px;">
+            <h3>🎓 انتهى قسم HTML الأساسي!</h3>
+            <p>أكملت 4 محاضرات — أنت الآن تعرف أساسيات HTML</p>
+            <p style="margin-top: 10px;"><strong>المرحلة القادمة: CSS — لتجميل صفحاتك!</strong></p>
+        </div>
+    </section>
+
+    <!-- ═══════ QUIZ ═══════ -->
+    <div class="quiz">
+        <h3>🧠 اختبر نفسك — 10 أسئلة</h3>
+
+        <div class="question">
+            <h4>السؤال 1: ما هو الـ tag لإنشاء صف في الجدول؟</h4>
+            <ul class="options">
+                <li>A) &lt;row&gt;</li>
+                <li>B) &lt;tr&gt;</li>
+                <li>C) &lt;td&gt;</li>
+                <li>D) &lt;line&gt;</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 2: ما الفرق بين &lt;th&gt; و &lt;td&gt;؟</h4>
+            <ul class="options ar">
+                <li>A) th للعناوين (عريضة ومركزية)، td للبيانات</li>
+                <li>B) لا يوجد فرق</li>
+                <li>C) th للصور، td للنصوص</li>
+                <li>D) th للجداول، td للنماذج</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 3: ما وظيفة colspan="3"؟</h4>
+            <ul class="options ar">
+                <li>A) تجعل الخلية تمتد على 3 أعمدة</li>
+                <li>B) تجعل الخلية تمتد على 3 صفوف</li>
+                <li>C) تجعل الخلية بعرض 3 بكسل</li>
+                <li>D) تحذف 3 أعمدة</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 4: ما هو الـ tag الأساسي للنموذج؟</h4>
+            <ul class="options">
+                <li>A) &lt;input&gt;</li>
+                <li>B) &lt;form&gt;</li>
+                <li>C) &lt;submit&gt;</li>
+                <li>D) &lt;data&gt;</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 5: كيف نخفي كلمة المرور أثناء الكتابة؟</h4>
+            <ul class="options">
+                <li>A) type="text"</li>
+                <li>B) type="password"</li>
+                <li>C) type="hidden"</li>
+                <li>D) type="secret"</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 6: ما فائدة attribute اسمه for في الـ label؟</h4>
+            <ul class="options ar">
+                <li>A) لا فائدة له</li>
+                <li>B) يربط الـ label بالـ input عن طريق id</li>
+                <li>C) يغير لون الـ label</li>
+                <li>D) يخفي الـ label</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 7: ما الفرق بين checkbox و radio؟</h4>
+            <ul class="options ar">
+                <li>A) checkbox يسمح باختيار متعدد، radio اختيار واحد فقط</li>
+                <li>B) لا يوجد فرق</li>
+                <li>C) radio يسمح باختيار متعدد، checkbox اختيار واحد</li>
+                <li>D) checkbox للنماذج، radio للجداول</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 8: ما هو الـ tag للنص الطويل متعدد الأسطر؟</h4>
+            <ul class="options">
+                <li>A) &lt;input type="text"&gt;</li>
+                <li>B) &lt;textarea&gt;</li>
+                <li>C) &lt;longtext&gt;</li>
+                <li>D) &lt;multiline&gt;</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 9: ما وظيفة required في الـ input؟</h4>
+            <ul class="options ar">
+                <li>A) يجعل الحقل إلزامياً (لا يمكن إرسال النموذج بدونه)</li>
+                <li>B) يحذف الحقل</li>
+                <li>C) يخفي الحقل</li>
+                <li>D) يكرر الحقل</li>
+            </ul>
+        </div>
+
+        <div class="question">
+            <h4>السؤال 10: ما هو placeholder؟</h4>
+            <ul class="options ar">
+                <li>A) نص توضيحي خفيف داخل الحقل</li>
+                <li>B) لون الحقل</li>
+                <li>C) حجم الحقل</li>
+                <li>D) اسم الحقل</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ═══════ HOMEWORK ═══════ -->
+    <div class="homework">
+        <h3>📝 الواجب النهائي — 5 مسائل شاملة</h3>
+
+        <div class="task">
+            <h4>المسألة 1: جدول درجاتي</h4>
+            <p><strong>المطلوب:</strong> أنشئ جدولاً لدرجاتك في المواد:</p>
+            <ul>
+                <li>استخدم &lt;thead&gt; و &lt;tbody&gt;</li>
+                <li>العناوين: المادة | الدرجة | التقدير</li>
+                <li>5 مواد على الأقل</li>
+                <li>صف أخير يحتوي على "المجموع" يمتد على 3 أعمدة (استخدم colspan)</li>
+            </ul>
+        </div>
+
+        <div class="task">
+            <h4>المسألة 2: نموذج تسجيل دخول بسيط</h4>
+            <p><strong>المطلوب:</strong> أنشئ نموذج Login يحتوي على:</p>
+            <ul>
+                <li>اسم المستخدم أو البريد (type="email")</li>
+                <li>كلمة المرور (type="password")</li>
+                <li>checkbox: "تذكرني"</li>
+                <li>زر تسجيل الدخول</li>
+                <li>رابط "نسيت كلمة المرور؟"</li>
+            </ul>
+        </div>
+
+        <div class="task">
+            <h4>المسألة 3: نموذج استبيان عن الهوايات</h4>
+            <p><strong>المطلوب:</strong> أنشئ نموذج استبيان يسأل عن:</p>
+            <ul>
+                <li>الاسم (text)</li>
+                <li>العمر (number)</li>
+                <li>الجنس (radio: ذكر/أنثى)</li>
+                <li>الهوايات المفضلة (checkbox: 5 خيارات على الأقل)</li>
+                <li>المدينة (select منسدلة)</li>
+                <li>رسالة: "صف هوايتك المفضلة" (textarea)</li>
+            </ul>
+        </div>
+
+        <div class="task">
+            <h4>المسألة 4: جدول مقارنة المنتجات</h4>
+            <p><strong>المطلوب:</strong> أنشئ جدولاً يقارن 3 هواتف:</p>
+            <ul>
+                <li>العناوين: الميزة | الهاتف 1 | الهاتف 2 | الهاتف 3</li>
+                <li>المواصفات: الشاشة، الكاميرا، البطارية، السعر</li>
+                <li>استخدم rowspan في خلية واحدة على الأقل</li>
+            </ul>
+        </div>
+
+        <div class="task">
+            <h4>المسألة 5: 🏆 المشروع الشامل — موقعي الشخصي الكامل</h4>
+            <p><strong>المطلوب:</strong> ابنِ موقعاً شخصياً متكاملاً بـ 3 صفحات على الأقل:</p>
+
+            <p><strong>الصفحة 1: index.html (الصفحة الرئيسية)</strong></p>
+            <ul>
+                <li>عنوان رئيسي باسمك</li>
+                <li>صورتك الشخصية (أو أي صورة)</li>
+                <li>فقرة تعريفية عنك</li>
+                <li>قائمة بـ 3 روابط: عني | معرض الصور | تواصل معي</li>
+            </ul>
+
+            <p><strong>الصفحة 2: gallery.html (معرض الصور)</strong></p>
+            <ul>
+                <li>3 صور على الأقل مع &lt;figure&gt; و &lt;figcaption&gt;</li>
+                <li>رابط للعودة للصفحة الرئيسية</li>
+            </ul>
+
+            <p><strong>الصفحة 3: contact.html (تواصل معي)</strong></p>
+            <ul>
+                <li>نموذج اتصال يحتوي على:
+                    <ul>
+                        <li>الاسم (text)</li>
+                        <li>البريد الإلكتروني (email)</li>
+                        <li>الموضوع (select منسدلة)</li>
+                        <li>الرسالة (textarea)</li>
+                        <li>زر إرسال</li>
+                    </ul>
+                </li>
+                <li>جدول بمعلومات التواصل (البريد، الهاتف، المدينة)</li>
+                <li>رابط للعودة للصفحة الرئيسية</li>
+            </ul>
+
+            <p><strong>شروط إضافية:</strong></p>
+            <ul>
+                <li>تنظيم المشروع في مجلدات (images/, pages/)</li>
+                <li>استخدام تعليقات &lt;!-- --&gt; لتنظيم الكود</li>
+                <li>كل الصفحات مترابطة بروابط صحيحة</li>
+                <li>كل الصور تظهر بدون مشاكل</li>
+                <li>أسماء الملفات بدون مسافات وبحروف إنجليزية صغيرة</li>
+            </ul>
+        </div>
+
+        <div class="milestone" style="margin-top: 20px; background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%); border-color: #ec4899;">
+            <h3 style="color: #9f1239;">🎉 تهانينا على إكمال HTML!</h3>
+            <p style="color: #4c0519;">أنت الآن مستعد للانتقال إلى CSS وجعل صفحاتك جميلة!</p>
+        </div>
+    </div>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer class="footer">
+        <p><strong>Sunshine T Academy</strong></p>
+        <p>"بنحوّل الحلم لكود"</p>
+        <p>Frontend Development Course — المحاضرة الرابعة (الأخيرة في HTML)</p>
+        <div class="next-lecture">
+            🎨 القسم القادم: <strong>CSS — Cascading Style Sheets</strong><br>
+            <small>سنتعلم كيف نجعل صفحاتنا جميلة وملونة ومنظمة!</small>
+        </div>
+    </footer>
+
+</div>
+</body>
+</html>
